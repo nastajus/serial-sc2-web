@@ -12,9 +12,9 @@ namespace serial_sc2_web
         public static void Test()
         {
             ReportBattle1v1 report = new ReportBattle1v1();
-            var battle = MockBattleSequences.Battle01_ZerglingVsMarine().ToList();
-            var winner = report.CalculateWinner(battle);
-            Console.WriteLine($"winner is {winner.GetType().Name}");
+            var battle = MockBattleSequences.Battle01_ZerglingVsMarine_BothDie().ToList();
+            var results = report.CalculateWinner(battle);
+            Console.WriteLine($"winner is {results.Winner.GetType().Name}, and loser is {results.Loser.GetType().Name}");
             Console.ReadKey();
         }
     }

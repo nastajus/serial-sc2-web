@@ -29,20 +29,21 @@ namespace serial_sc2_web.Models.Report
 
 
 
-        //public void CalculateWinner(IEnumerable<ReportChange> actions) { }
-
-        public Affectable CalculateWinner(List<ReportChange> actions) {
-
-            //PopulateChangesTable
+        public void PopulateChangesTable(List<ReportChange> actions)
+        {
+            //if (actions == null) { return;  } //when need..?
             foreach (var action in actions)
             {
                 AddChangeSample(action);
             }
-
-            //evaluate winner/loser based on isDead... with lambda properties... done.
-            return Winner;
-
         }
+
+        public ReportCombatantResult1v1 CalculateWinner()
+        {
+            //evaluate winner/loser based on isDead... with lambda properties... done.
+            return new ReportCombatantResult1v1(Winner, Loser);
+        }
+
 
 
         //loop with polling rate

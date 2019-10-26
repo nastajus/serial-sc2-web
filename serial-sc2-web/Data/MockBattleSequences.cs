@@ -9,7 +9,7 @@ namespace serial_sc2_web.Data
 {
     public static class MockBattleSequences
     {
-        public static IEnumerable<ReportChange> Battle01_ZerglingVsMarine()
+        public static IEnumerable<ReportChange> Battle01_ZerglingVsMarine_BothDie()
         {
             Zergling zergling = new Zergling();
             Marine marine = new Marine();
