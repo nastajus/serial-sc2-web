@@ -15,6 +15,8 @@ namespace serial_sc2_web.Models.Starcraft
         public float BonusDamage { get { return 0; } }
         public float AttackUpgrades { get; private set; }
 
+        public float Cooldown { get; private set; }
+
 
         //damage calcluation fields:
         protected float HitPoints { get; set; }         //== HealthPoints
@@ -24,7 +26,7 @@ namespace serial_sc2_web.Models.Starcraft
 
         /// Ground Attack
         protected float GAttack { get; set; }
-        protected float Cooldown { get; set; }
+        
 
 
 
@@ -47,13 +49,9 @@ namespace serial_sc2_web.Models.Starcraft
 
 
         //unit livability & attackability fields
-        bool isDead { get; set; }
-        bool isParalyzed { get; set; }
+        public bool IsDead { get; private set; }
+        public bool IsParalyzed { get; private set; }
 
-
-        //unit statistics fields:
-        int attacksDone { get; set; } //change into a list of Affectables or list of meta stats-aff?
-        int killsDone { get; set; }
 
 
         public ReportChange UseAbility(Affectable target)
@@ -74,14 +72,15 @@ namespace serial_sc2_web.Models.Starcraft
             ApplyDamage(damage);
             //this.ApplyDamage(damage);
 
-            ReportChange changes = new ReportChange { 
-                Initiator = this, 
-                Activity = ActivityType.ATTACKS, 
+            ReportChange changes = new ReportChange {
+                Initiator = this,
+                Activity = ActivityType.ATTACKS,
                 Recepient = other,
-                HitPointChange = damage //for now...
+                HitPointChange = damage, //for now...
+                TimeCoolingChange = Cooldown
             };
 
-            if (other.isDead)
+            if (other.IsDead)
             {
                 changes.VitalStatusChangedToDead = true;
             }
@@ -103,7 +102,7 @@ namespace serial_sc2_web.Models.Starcraft
 
                 //when exceeds unit health points, just set actual hit points to zero
                 HitPoints = (healthDamage < 0) ? 0 : healthDamage;
-                isDead = (HitPoints == 0); // ? true : false;
+                IsDead = (HitPoints == 0); // ? true : false;
 
                 //keep counting negative points for hypothetical calcluations
                 HitPointsHypothetical -= healthDamage; 

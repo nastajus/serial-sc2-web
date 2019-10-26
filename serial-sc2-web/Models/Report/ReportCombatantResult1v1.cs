@@ -6,9 +6,12 @@ using serial_sc2_web.Models.Starcraft;
 
 namespace serial_sc2_web.Models.Report
 {
+    /// <summary>
+    /// Used at the end of a ReportBattle sequence analysis, such as CalculateWinner()
+    /// </summary>
     public class ReportCombatantResult1v1
     {
-        //public CombatResultState1v1 Result { get; set; }
+        public CombatResultState1v1 Result { get; set; }
         public Affectable Winner { get; set; }
         public Affectable Loser { get; set; }
         public List<Affectable> Tied;
@@ -17,15 +20,15 @@ namespace serial_sc2_web.Models.Report
         {
             this.Winner = Winner;
             this.Loser = Loser;
-            //this.Result = CombatResultState1v1.WINNER_AND_LOSER;
+            this.Result = CombatResultState1v1.WINNER_AND_LOSER;
         }
 
         public ReportCombatantResult1v1(List<Affectable> Tied)
         {
-            //this.Result = CombatResultState1v1.TIE;
+            this.Result = CombatResultState1v1.TIE;
         }
 
     }
 
-    //public enum CombatResultState1v1 { UNRESOLVED, WINNER_AND_LOSER, TIE }
+    public enum CombatResultState1v1 { UNRESOLVED, WINNER_AND_LOSER, TIE }
 }

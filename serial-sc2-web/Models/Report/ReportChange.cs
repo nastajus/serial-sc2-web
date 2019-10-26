@@ -25,6 +25,7 @@ namespace serial_sc2_web.Models.Report
         public int AttacksDoneChange { get; set; }
         public bool VitalStatusChangedToDead { get; set; }
         public int KillsDoneChange { get; set; }
+        public float TimeCoolingChange { get; set; }
 
         public ReportChange() { }
 

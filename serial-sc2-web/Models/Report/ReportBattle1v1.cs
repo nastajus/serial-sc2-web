@@ -29,28 +29,45 @@ namespace serial_sc2_web.Models.Report
 
 
 
-        public void PopulateChangesTable(List<ReportChange> actions)
+        //manually controlled battle
+        public ReportCombatantResult1v1 CalculateWinner(List<ReportChange> actions)
         {
+
             //if (actions == null) { return;  } //when need..?
+            //PopulateChangesTable()
             foreach (var action in actions)
             {
                 AddChangeSample(action);
             }
-        }
 
-        public ReportCombatantResult1v1 CalculateWinner()
-        {
+            if (changesTable.Count == 0) { return null; }
             //evaluate winner/loser based on isDead... with lambda properties... done.
             return new ReportCombatantResult1v1(Winner, Loser);
         }
 
 
 
-        //loop with polling rate
-        public void CalculateWinner(Affectable a, Affectable b)
-        {
-
-        }
+        //naive simplistic loop with polling rate. biased to first parameter in most naive implementation, even when same unit
+        //public void CalculateWinner(Affectable a, Affectable b)
+        //{
+        //    float timer = 0;
+        //    do
+        //    {
+        //        timer += 0.01f;
+        //        //if smaller  mod  larger == smaller then , threshold not passed
+        //        //i'm uncertain coupling directly to .Cooldown is good clean code or not...
+        //        if (timer % a.Cooldown != timer)
+        //        {
+        //            var change = a.Attacks(b);
+        //            AddChangeSample(change);
+        //        }
+        //        if (timer % b.Cooldown != timer)
+        //        {
+        //            var change = b.Attacks(a);
+        //            AddChangeSample(change);
+        //        }
+        //    } while (!a.IsDead || !b.IsDead);
+        //}
 
 
     }
