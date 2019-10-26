@@ -5,7 +5,4 @@
     <RootNamespace>serial_sc2_web</RootNamespace>
   </PropertyGroup>
 
-  <ItemGroup>
-  </ItemGroup>
-
 </Project>
