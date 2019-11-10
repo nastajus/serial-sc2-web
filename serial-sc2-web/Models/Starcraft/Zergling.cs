@@ -16,7 +16,6 @@ namespace serial_sc2_web.Models.Starcraft
             //annoyed it isn't easy to automate this in base class from values input in child class...
             HitPointsMax = HitPoints;
             HitPointsHypothetical = HitPoints;
-
         }
     }
 }

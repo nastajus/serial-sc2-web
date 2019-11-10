@@ -12,7 +12,7 @@ namespace serial_sc2_web.Models.Report
     //i'm debating whether to report *just* changes *only*, or a mix with full-status updates...
     //i'll *try* adhering to *just changes* for the moment.
 
-    //change reports "shouldn't be smart enough to decide won/loss, let the receiving aggregator ReportBattle do that.
+    //change reports "shouldn't be smart enough to decide won/loss", let the receiving aggregator ReportBattle do that.
 
     public class ReportChange
     {
@@ -20,12 +20,16 @@ namespace serial_sc2_web.Models.Report
         public ActivityType Activity { get; set; }
         public Affectable Recepient { get; set; }
 
+
         public string DescriptionOfChange { get; set; }
         public float HitPointChange { get; set; }
-        public int AttacksDoneChange { get; set; }
         public bool VitalStatusChangedToDead { get; set; }
-        public int KillsDoneChange { get; set; }
         public float TimeCoolingChange { get; set; }
+
+
+        public int AttacksDoneChange { get; set; }
+        public int KillsDoneChange { get; set; }
+
 
         public ReportChange() { }
 

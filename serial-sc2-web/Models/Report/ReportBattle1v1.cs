@@ -12,20 +12,28 @@ namespace serial_sc2_web.Models.Report
     public class ReportBattle1v1
     {
         //stats
-        //Affectable winner { get; set; } //=> use 1-liner lambda to search table with linq, and possibly return null or return "NOT YET"...
-        //Affectable loser { get; set; } 
-        //List<Affectable> tied { get; set; }
-
         public Affectable Winner { get { return changesTable.FirstOrDefault(change => change.VitalStatusChangedToDead).Initiator; } }
 
         public Affectable Loser { get { return changesTable.FirstOrDefault(change => change.VitalStatusChangedToDead).Recepient; } }
+
+        //List<Affectable> Tied { get; set; }
+
+        public BattleVictoryStatus BattleStatus { get {
+                if (Winner != null && Loser != null) { return BattleVictoryStatus.A_WINNER_AND_LOSER; }
+                //else if (Tied != null) { return BattleVictoryStatus.TIED; }
+                else return BattleVictoryStatus.UNRESOLVED;
+            } }
+
+        //undecided where to store: A) inside Affectable, B) inside new parent class of Affectable, C?
+        //both seem dirty to me, in my ideal clean design... so i have to choose a trade-off location.
+        //public CombatantVictoryStatus CombatantStatus
 
         List<ReportChange> changesTable = new List<ReportChange>(); //when is it good to init list??
 
         
         
         //abilities
-        void AddChangeSample(ReportChange change) { changesTable.Add(change); } //i question why use..
+        void AddChangeSample(ReportChange change) { changesTable.Add(change); } //i question why use.. is throwing an exception here a good practice.
 
 
 
@@ -72,5 +80,8 @@ namespace serial_sc2_web.Models.Report
 
     }
 
-    public enum CompetitorStatus { WINNER, LOSER, TIED }
+    public enum BattleVictoryStatus { UNRESOLVED, A_WINNER_AND_LOSER, TIED }
+
+    public enum CombatantVictoryStatus { UNDETERMINED, WINNER, LOSER, TIED }
+
 }

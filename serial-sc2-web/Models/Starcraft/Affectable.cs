@@ -15,7 +15,7 @@ namespace serial_sc2_web.Models.Starcraft
         public float BonusDamage { get { return 0; } }
         public float AttackUpgrades { get; private set; }
 
-        public float Cooldown { get; private set; }
+        public float Cooldown { get; protected set; }
 
 
         //damage calcluation fields:
@@ -26,6 +26,7 @@ namespace serial_sc2_web.Models.Starcraft
 
         /// Ground Attack
         protected float GAttack { get; set; }
+
         
 
 
@@ -33,8 +34,8 @@ namespace serial_sc2_web.Models.Starcraft
 
         //unused so far... 
 
-        float ShieldPoints { get; set; }
-        protected float ShieldPointsMax { get; set; }
+        //float ShieldPoints { get; set; }
+        //protected float ShieldPointsMax { get; set; }
 
         //refers to Affectable's "normal". Only laser giraffs (Colossus) can be both.
         //List<Elevation> Elevations { get; set; } 
@@ -54,23 +55,10 @@ namespace serial_sc2_web.Models.Starcraft
 
 
 
-        public ReportChange UseAbility(Affectable target)
-        {
-            return new ReportChange();
-        }
-
-        //applies always to self, and always increments by 1 (i think, to follow sc2 closely)
-        public ReportChange Upgrade(Upgrade upgrade)
-        {
-            return new ReportChange();
-        }
-
-
         public ReportChange Attacks(Affectable other)
         {
             var damage = Mechanics.DamageFormula(this, other);
             ApplyDamage(damage);
-            //this.ApplyDamage(damage);
 
             ReportChange changes = new ReportChange {
                 Initiator = this,
@@ -79,6 +67,8 @@ namespace serial_sc2_web.Models.Starcraft
                 HitPointChange = damage, //for now...
                 TimeCoolingChange = Cooldown
             };
+
+            changes.AttacksDoneChange = 1;
 
             if (other.IsDead)
             {
@@ -102,7 +92,7 @@ namespace serial_sc2_web.Models.Starcraft
 
                 //when exceeds unit health points, just set actual hit points to zero
                 HitPoints = (healthDamage < 0) ? 0 : healthDamage;
-                IsDead = (HitPoints == 0); // ? true : false;
+                IsDead = HitPoints == 0;
 
                 //keep counting negative points for hypothetical calcluations
                 HitPointsHypothetical -= healthDamage; 
@@ -110,11 +100,24 @@ namespace serial_sc2_web.Models.Starcraft
             }
         }
 
+
+        //public ReportChange UseAbility(Affectable target)
+        //{
+        //    return new ReportChange();
+        //}
+
+        //applies always to self, and always increments by 1 (i think, to follow sc2 closely)
+        //public ReportChange Upgrade(Upgrade upgrade)
+        //{
+        //    return new ReportChange();
+        //}
+
+
     }
 
-    public enum Race { TERRAN, ZERG, PROTOSS }
+    //public enum Race { TERRAN, ZERG, PROTOSS }
 
-    public enum Elevation { GROUND, AIR }
+    //public enum Elevation { GROUND, AIR }
 
     public enum Upgrade {  }
 

@@ -17,6 +17,5 @@ namespace serial_sc2_web.Models.Starcraft
             HitPointsMax = HitPoints;
             HitPointsHypothetical = HitPoints;
         }
-
     }
 }
